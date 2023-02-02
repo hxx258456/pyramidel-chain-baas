@@ -21,6 +21,7 @@ var config *viper.Viper
 
 type (
 	TopLevel struct {
+		Port        string      `json:"port" yaml:"port"`
 		Logger      Logger      `json:"logger" yaml:"logger"`
 		MySqlConfig MySQLConfig `mapstructure:"MySql"`
 		RedisConfig RedisConfig `mapstructure:"Redis"`
@@ -57,12 +58,12 @@ func loadConfig() {
 		fmt.Printf("Error reading configuration1: %s", err)
 		return
 	}
-	fmt.Println(config.AllSettings())
+	//fmt.Println(config.AllSettings())
 
 	err := config.Unmarshal(&Defaultconfig)
 	if err != nil {
 		fmt.Printf("Error reading configuration2: %s", err)
 		return
 	}
-	fmt.Println(Defaultconfig)
+	//fmt.Println(Defaultconfig)
 }

@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
-	"os"
-
 	"github.com/hxx258456/pyramidel-chain-baas/dao/mysql"
 	"github.com/hxx258456/pyramidel-chain-baas/dao/redis"
 	"github.com/hxx258456/pyramidel-chain-baas/internal/localconfig"
 	"github.com/hxx258456/pyramidel-chain-baas/pkg/utils/logger"
 	"github.com/hxx258456/pyramidel-chain-baas/route"
+	"os"
 )
 
 func main() {
@@ -23,19 +22,19 @@ func main() {
 	//2.初始化日志
 	logger.CfgConsoleLogger(true, true)
 	//3.初始化Mysql
-	if err := mysql.Init(); err != nil {
+	if err := mysql.Init(&localconfig.Defaultconfig); err != nil {
 		fmt.Printf("init mysql failed, err:%v\n", err)
 		return
 	}
 	defer mysql.Close()
 	//4.初始化Redis
-	if err := redis.Init(); err != nil {
+	if err := redis.Init(&localconfig.Defaultconfig); err != nil {
 		fmt.Printf("init redis failed, err:%v\n", err)
 		return
 	}
 	defer redis.Close()
 	//5.注册路由
-	route.SetUpRouter()
+	route.SetUpRouter(&localconfig.Defaultconfig)
 	//6.启动服务
 
 }
